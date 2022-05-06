@@ -15,13 +15,13 @@ struct Handler;
 #[async_trait]
 impl EventHandler for Handler {
     async fn message(&self, ctx: Context, msg: Message) {
-        if msg.author.id == 235657818194051072 {
-            if rand::thread_rng().gen::<f32>() <= 0.05f32 {
-                let reaction = ReactionType::try_from("<:Mori_Elite:971891499564400730>").unwrap();
-                if msg.react(&ctx, reaction).await.is_err() {
-                    error!("Failed to react to message!");
-                };
+        if msg.author.id == 235657818194051072 && rand::thread_rng().gen::<f32>() <= 0.05f32 {
+            let reaction = ReactionType::try_from("<a:Mori_Elite:971891441171329165>").unwrap();
+            let resp = msg.react(&ctx, reaction).await;
+            if resp.is_err() {
+                error!("Error reacting: {:?}", resp);
             }
+            info!("Reacted to message {:?}", msg);
         }
     }
 
